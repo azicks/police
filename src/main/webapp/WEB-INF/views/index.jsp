@@ -198,7 +198,7 @@
     }
 
     function prepareNewModal(modal) {
-        modal.find('#name').empty();
+        modal.find('#name').val('');
         modal.find('#address').val('');
         modal.find('#text').val('');
         modal.find('#btn_ok').text('Создать');

@@ -1,6 +1,5 @@
 package police.controllers;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -29,7 +28,7 @@ public class AccidentController {
     }
 
     @PostMapping(path = "accident/new")
-    public RedirectView addAccident(@RequestParam @NonNull @NotBlank String name,
+    public RedirectView addAccident(@RequestParam @NonNull String name,
                                     @RequestParam @NonNull String address,
                                     @RequestParam String text,
                                     Model model) {
@@ -45,7 +44,7 @@ public class AccidentController {
 
     @PostMapping(path = "accident/edit")
     public RedirectView editAccident(@RequestParam @NonNull String id,
-                                     @RequestParam @NonNull @NotBlank String name,
+                                     @RequestParam @NonNull String name,
                                      @RequestParam @NonNull String address,
                                      @RequestParam String text,
                                      Model model) {
