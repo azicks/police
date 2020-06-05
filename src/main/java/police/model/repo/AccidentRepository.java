@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface AccidentRepository {
     public boolean addAccident(Accident accident);
-    public boolean delete(int id);
+    public boolean delete(long id);
     public boolean update(Accident accident);
     public List<Accident> getAllAccidents();
-    public Accident getById(int id);
+    public Accident getById(long id);
 }

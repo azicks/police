@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 import java.util.Objects;
 
 public class Accident {
-    private int id;
+    private long id;
     private String name;
     private String text;
     private String address;
@@ -16,11 +16,11 @@ public class Accident {
         this.address = address;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -71,7 +71,7 @@ public class Accident {
     @Override
     public String toString() {
         JSONObject obj = new JSONObject();
-        obj.put("id", id);
+        obj.put("id", String.valueOf(id));
         obj.put("name", name);
         obj.put("address", address);
         obj.put("text", text);

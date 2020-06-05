@@ -8,8 +8,12 @@ import police.model.repo.AccidentRepository;
 
 @Controller
 public class IndexController {
+    private final AccidentRepository accidents;
+
     @Autowired
-    private AccidentRepository accidents;
+    public IndexController(AccidentRepository accidents) {
+        this.accidents = accidents;
+    }
 
     @GetMapping("/")
     public String index(Model model) {

@@ -1,5 +1,6 @@
 package police.model.repo.impl;
 
+import org.springframework.stereotype.Component;
 import police.model.Accident;
 import police.model.repo.AccidentRepository;
 
@@ -9,25 +10,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class AccidentRepositoryMemoryImpl implements AccidentRepository {
-    private final Map<Integer, Accident> accidents = new HashMap<>();
+    private final Map<Long, Accident> accidents = new HashMap<>();
+    private int id;
 
     @PostConstruct
     public void init() {
         for (int n = 1; n < 5; n++) {
             Accident acc = new Accident("acc" + n, "text" + n, "Улица Пушкина, село Кукушкино");
-            acc.setId(n);
-            accidents.put(n, acc);
+            addAccident(acc);
         }
     }
 
     @Override
     public boolean addAccident(Accident accident) {
-        return false;
+        accident.setId(id++);
+        accidents.put(accident.getId(), accident);
+        return true;
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(long id) {
         boolean result = false;
         if (accidents.containsKey(id)) {
             accidents.remove(id);
@@ -39,7 +43,7 @@ public class AccidentRepositoryMemoryImpl implements AccidentRepository {
     @Override
     public boolean update(Accident accident) {
         boolean result = false;
-        Integer id = accident.getId();
+        long id = accident.getId();
         if (accidents.containsKey(id)) {
             accidents.put(id, accident);
             result = true;
@@ -53,7 +57,7 @@ public class AccidentRepositoryMemoryImpl implements AccidentRepository {
     }
 
     @Override
-    public Accident getById(int id) {
+    public Accident getById(long id) {
         return accidents.get(id);
     }
 }

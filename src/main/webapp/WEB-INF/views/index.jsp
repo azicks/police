@@ -5,7 +5,8 @@
 <html>
 <head>
     <title>Accident list</title>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -98,7 +99,7 @@
             <div class="modal-body">
             </div>
             <div class="modal-footer">
-                <form method="post">
+                <form method="post" action="accident/delete">
                     <input id="modal_delete_id" type="hidden" name="id">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Отмена</button>
                     <button type="submit" name="action" value="delete" class="btn btn-outline-danger">Удалить</button>
@@ -121,26 +122,28 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="create" enctype="multipart/form-data">
+                <form method="post" id="form_accident" enctype="application/x-www-form-urlencoded">
                     <div class="form-group">
                         <label for="name">Извещение</label>
-                        <input class="form-control" id="name" type="text" name="name" required="required">
+                        <input class="form-control" id="name" name="name" required="required">
                     </div>
                     <div class="form-group">
                         <label for="address">Адрес ДТП</label>
-                        <input class="form-control" id="address" type="text" name="address" required="required">
+                        <input class="form-control" id="address" name="address" required="required">
                     </div>
                     <div class="form-group">
                         <label for="text">Описание</label>
                         <textarea class="form-control rounded-0" id="text" rows="4" name="text"></textarea>
                     </div>
+                    <input type="hidden" id="id" name="id">
+                    <input type="submit" id="form_accident_submit" hidden>
                 </form>
             </div>
             <div class="modal-footer">
                 <form method="post">
-                    <input id="modal_edit_id" type="hidden" name="id">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Отмена</button>
-                    <button type="submit" id="btn_ok" name="action" value="create" class="btn btn-outline-success">Создать</button>
+                    <button type="button" id="btn_ok" class="btn btn-outline-success" onclick="editOk()">Создать
+                    </button>
                 </form>
             </div>
         </div>
@@ -162,11 +165,11 @@
         let action = button.data('action');
         let modal = $(this);
         let title;
-        if('create' === action) {
+        if ('create' === action) {
             title = 'Создать заявку';
             prepareNewModal(modal);
         }
-        if('edit' === action) {
+        if ('edit' === action) {
             title = 'Изменить заявку с id = ' + id;
             $.ajax({
                 type: 'GET',
@@ -182,22 +185,30 @@
             });
         }
         modal.find('.modal-title').text(title);
-        $("#modal_edit_id").val(id);
+
     });
 
     function prepareEditModal(modal, accident) {
         modal.find('#name').val(accident.name);
         modal.find('#address').val(accident.address);
         modal.find('#text').val(accident.text);
+        modal.find('#id').val(accident.id);
         modal.find('#btn_ok').text('Изменить');
+        modal.find('#form_accident').attr("action", "accident/edit");
     }
 
     function prepareNewModal(modal) {
-        modal.find('#name').val('');
+        modal.find('#name').empty();
         modal.find('#address').val('');
         modal.find('#text').val('');
         modal.find('#btn_ok').text('Создать');
+        modal.find('#form_accident').attr("action", "accident/new");
     }
+
+    function editOk() {
+        $('#form_accident_submit').click();
+    }
+
 </script>
 </body>
 </html>
