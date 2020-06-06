@@ -2,13 +2,21 @@ package police.model;
 
 import org.json.simple.JSONObject;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "accident")
 public class Accident {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String text;
     private String address;
+
+    public Accident() {
+    }
 
     public Accident(String name, String text, String address) {
         this.name = name;
